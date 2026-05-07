@@ -48,6 +48,11 @@ namespace ShoeStoreManagement.Infrastructure.Data
                 .HasForeignKey(u => u.StoreId)
                 .IsRequired(false);
 
+            // Index
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.Email)
+                .IsUnique();
+
             // Store - Order ( 1 to Many )
             modelBuilder.Entity<Order>()
                 .HasOne(o => o.Store)

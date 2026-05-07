@@ -12,6 +12,8 @@ namespace ShoeStoreManagement.Domain.Entities
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
         public Role Role { get; set; }
+        public string Email { get; set; } = string.Empty;
+        public string PaswordHash { get; set; } = string.Empty;
         public int StoreId { get; set; }
 
         // Navigation
