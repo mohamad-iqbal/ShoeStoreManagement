@@ -5,19 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ShoeStoreManagement.Domain.Entities
+namespace ShoeStoreManagement.Application.Dtos
 {
-    public class User
+    public class UserResponseDto
     {
         public int Id { get; set; }
         public string FullName { get; set; } = string.Empty;
         public Role Role { get; set; }
         public string Email { get; set; } = string.Empty;
-        public string PasswordHash { get; set; } = string.Empty;
         public int StoreId { get; set; }
-
-        // Navigation
-        public Store Store { get; set; } = null!;
-        public ICollection<InventoryTransaction> InventoryTransactions { get; set; } = new List<InventoryTransaction>();
     }
 }

@@ -27,13 +27,13 @@ namespace ShoeStoreManagement.Application.Services
             _configuration = configuration;
         }
 
-        public async Task<AuthResponseDto?> LoginAsync(LoginRequestDto dto)
+        public async Task<AuthResponseDto?> LoginAsync(LoginDto dto)
         {
             var user = await _userRepository.GetByEmailAsync(dto.Email);
 
             if (user == null)
                 throw new Exception("Invalid Email or Password");
-            bool isPasswordValid = BCrypt.Net.BCrypt.Verify(dto.Password, user.PaswordHash);
+            bool isPasswordValid = BCrypt.Net.BCrypt.Verify(dto.Password, user.PasswordHash);
             if (!isPasswordValid)
                 throw new Exception("Invalid Email or Password");
 

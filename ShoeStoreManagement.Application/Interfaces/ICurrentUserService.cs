@@ -1,4 +1,4 @@
-﻿using ShoeStoreManagement.Application.Dtos;
+﻿using ShoeStoreManagement.Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace ShoeStoreManagement.Application.Interfaces
 {
-    public interface IAuthService
+    public interface ICurrentUserService
     {
-        Task<AuthResponseDto?> LoginAsync(LoginDto dto);
+        int Id { get; }
+        Role Role { get; }
     }
 }
