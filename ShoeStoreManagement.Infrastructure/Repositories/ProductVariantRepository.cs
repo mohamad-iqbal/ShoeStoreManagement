@@ -1,9 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ShoeStoreManagement.Domain.Entities;
 using ShoeStoreManagement.Domain.Interfaces;
 using ShoeStoreManagement.Infrastructure.Data;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -51,6 +53,13 @@ namespace ShoeStoreManagement.Infrastructure.Repositories
         {
             _context.ProductVariants.Remove(productVariant);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<bool> ExistProductNameAndSizeAsync(string productName, int size, int storeId)
+        {
+            return await _context.ProductVariants.AnyAsync(v => v.Product.Name == productName &&
+            v.Size == size &&
+            v.Product.StoreId == storeId);
         }
     }
 }

@@ -15,5 +15,6 @@ namespace ShoeStoreManagement.Domain.Interfaces
         Task <IEnumerable<ProductVariant>> GetByProductIdAsync(int id);
         Task UpdateAsync(ProductVariant productVariant);
         Task DeleteAsync(ProductVariant productVariant);
+        Task<bool> ExistProductNameAndSizeAsync(string productName, int size, int storeId);
     }
 }

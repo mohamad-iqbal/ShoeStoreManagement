@@ -99,7 +99,7 @@ namespace ShoeStoreManagement.Application.Services
 
         public async Task<IEnumerable<UserResponseDto>> GetAllAsync()
         {
-                        var userId = _currentUser.Id;
+            
             var role = _currentUser.Role;
 
             if (role != Role.Admin)
