@@ -11,5 +11,6 @@ namespace ShoeStoreManagement.Application.Interfaces
     {
         int Id { get; }
         Role Role { get; }
+        int StoreId { get; }
     }
 }

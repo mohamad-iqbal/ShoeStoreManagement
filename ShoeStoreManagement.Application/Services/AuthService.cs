@@ -51,7 +51,8 @@ namespace ShoeStoreManagement.Application.Services
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.Role, user.Role.ToString())
+                new Claim(ClaimTypes.Role, user.Role.ToString()),
+                new Claim("StoreId", user.StoreId.ToString())
             };
 
             var expires = DateTime.UtcNow.AddMinutes(

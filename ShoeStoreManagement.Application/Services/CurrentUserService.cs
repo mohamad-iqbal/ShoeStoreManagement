@@ -37,5 +37,14 @@ namespace ShoeStoreManagement.Application.Services
                 return Enum.Parse<Role>(role!);
             }
         }
+
+        public int StoreId
+        {
+            get
+            {
+                var storeId = _httpContextAccessor.HttpContext?.User.FindFirst("StoreId")?.Value;
+                return int.Parse(storeId!);
+            }
+        }
     }
 }
