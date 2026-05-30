@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ShoeStoreManagement.Domain.Entities
+namespace ShoeStoreManagement.Application.Dtos
 {
-    public class Order
+    public class OrderResponseDto
     {
         public int Id { get; set; }
         public int StoreId { get; set; }
@@ -16,12 +16,7 @@ namespace ShoeStoreManagement.Domain.Entities
         public decimal TotalAmount { get; set; }
         public DateTime Date { get; set; }
         public Status Status { get; set; }
-
-        // Navigation
-        public Store Store { get; set; } = null!;
-        public Customer Customer { get; set; } = null!;
-        public ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
-        public ICollection<InventoryTransaction> InventoryTransactions { get; set; } = new List<InventoryTransaction>();
-
+        public List<OrderItemsResponseDto> OrderItems { get; set; }
+            = new();
     }
 }
