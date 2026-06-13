@@ -13,6 +13,7 @@ namespace ShoeStoreManagement.Domain.Interfaces
         Task <IEnumerable<Order>> GetAllAsync();
         Task<Order?> GetByIdAsync(int id);
         Task<Order?> GetWithItemsAsync(int orderId);
+        Task <Order?> GetByOrderNumberAsync(string  orderNumber);
         Task UpdateAsync (Order order);
     }
 }

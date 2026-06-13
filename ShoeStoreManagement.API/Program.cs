@@ -27,6 +27,7 @@ builder.Services.AddScoped<IStoreRepository, StoreRepository>();
 builder.Services.AddScoped<StoreService, StoreService>();
 builder.Services.AddScoped<ICustomerRepository,  CustomerRepository>();
 builder.Services.AddScoped<CustomerService, CustomerService>();
+builder.Services.AddScoped<IOrderService,  OrderService>();
 builder.Services.AddHttpContextAccessor();
 
 var jwtSettings = builder.Configuration.GetSection("Jwt");

@@ -27,12 +27,20 @@ namespace ShoeStoreManagement.Infrastructure.Repositories
 
         public async Task<IEnumerable<Order>> GetAllAsync()
         {
-            return await _context.Orders.ToListAsync();
+            return await _context.Orders
+                .Include(o => o.Store)
+                .Include(o => o.Customer)
+                .Include(o => o.OrderItems)
+                .ToListAsync();
         }
 
         public async Task<Order?> GetByIdAsync(int id)
         {
-            return await _context.Orders.FindAsync(id);
+            return await _context.Orders
+                .Include(o => o.Store)
+                .Include(o => o.Customer)
+                .Include(o => o.OrderItems)
+                .FirstOrDefaultAsync(o => o.Id == id);
         }
 
         public async Task<Order?> GetWithItemsAsync(int orderId)
@@ -40,6 +48,11 @@ namespace ShoeStoreManagement.Infrastructure.Repositories
             return await _context.Orders
                 .Include(o => o.OrderItems)
                 .FirstOrDefaultAsync(o => o.Id == orderId);
+        }
+
+        public async Task<Order?> GetByOrderNumberAsync(string orderNumber)
+        {
+            return await _context.Orders.FirstOrDefaultAsync(o => o.OrderNumber == orderNumber);
         }
 
         public async Task UpdateAsync(Order order)

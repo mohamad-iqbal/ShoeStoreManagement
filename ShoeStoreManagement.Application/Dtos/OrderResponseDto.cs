@@ -11,7 +11,9 @@ namespace ShoeStoreManagement.Application.Dtos
     {
         public int Id { get; set; }
         public int StoreId { get; set; }
+        public string StoreName { get; set; } = string.Empty;
         public int CustomerId { get; set; }
+        public string CustomerName { get; set; } = string.Empty;
         public string OrderNumber { get; set; } = string.Empty;
         public decimal TotalAmount { get; set; }
         public DateTime Date { get; set; }

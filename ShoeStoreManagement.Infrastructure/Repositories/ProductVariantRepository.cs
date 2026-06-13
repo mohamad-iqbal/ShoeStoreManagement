@@ -43,6 +43,12 @@ namespace ShoeStoreManagement.Infrastructure.Repositories
                 .ToListAsync();
         }
 
+        public async Task<ProductVariant?> GetByIdWithProductAsync(int id)
+        {
+            return await _context.ProductVariants.Include(pv => pv.Product)
+                .FirstOrDefaultAsync(pv => pv.Id == id);
+        }
+
         public async Task UpdateAsync(ProductVariant productVariant)
         {
             _context.ProductVariants.Update(productVariant);

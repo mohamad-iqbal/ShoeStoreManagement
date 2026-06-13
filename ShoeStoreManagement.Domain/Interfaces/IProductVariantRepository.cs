@@ -12,6 +12,7 @@ namespace ShoeStoreManagement.Domain.Interfaces
         Task AddAsync(ProductVariant productVariant);
         Task <IEnumerable<ProductVariant>> GetAllAsync ();
         Task <ProductVariant?> GetByIdAsync(int id);
+        Task<ProductVariant?> GetByIdWithProductAsync(int id);
         Task <IEnumerable<ProductVariant>> GetByProductIdAsync(int id);
         Task UpdateAsync(ProductVariant productVariant);
         Task DeleteAsync(ProductVariant productVariant);

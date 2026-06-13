@@ -12,6 +12,6 @@ namespace ShoeStoreManagement.Application.Dtos
         public int OrderId { get; set; }
         public int ProductVariantId { get; set; }
         public int Quantity { get; set; }
-        public int Price { get; set; }
+        public decimal Price { get; set; }
     }
 }
