@@ -28,6 +28,12 @@ builder.Services.AddScoped<StoreService, StoreService>();
 builder.Services.AddScoped<ICustomerRepository,  CustomerRepository>();
 builder.Services.AddScoped<CustomerService, CustomerService>();
 builder.Services.AddScoped<IOrderService,  OrderService>();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddScoped<IOrderItemRepository, OrderItemRepository>();
+builder.Services.AddScoped<IInventoryTransactionRepository, InventoryTransactionRepository>();
+builder.Services.AddScoped<IReturnItemRepository, ReturnItemRepository>();
+builder.Services.AddScoped<IReturnRepository, ReturnRepository>();
+builder.Services.AddScoped<IReturnService, ReturnService>();
 builder.Services.AddHttpContextAccessor();
 
 var jwtSettings = builder.Configuration.GetSection("Jwt");

@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace ShoeStoreManagement.Domain.Interfaces
 {
-    public interface IOrderItemRepository
+    public interface IReturnItemRepository
     {
-        Task AddAsync(OrderItem orderItem);
-        Task<OrderItem?> GetByIdAsync(int id);
+        Task AddAsync(ReturnItem returnItem);
     }
 }

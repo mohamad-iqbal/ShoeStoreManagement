@@ -10,25 +10,19 @@ using System.Threading.Tasks;
 
 namespace ShoeStoreManagement.Infrastructure.Repositories
 {
-    public class OrderItemRepository : IOrderItemRepository
+    public class ReturnRepository : IReturnRepository
     {
         private readonly ApplicationDbContext _context;
-        public OrderItemRepository(ApplicationDbContext context)
+
+        public ReturnRepository(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        public async Task AddAsync(OrderItem orderItem)
+        public async Task AddAsync(Return returnEntity)
         {
-            await _context.OrderItems.AddAsync(orderItem);
+            await _context.Returns.AddAsync(returnEntity);
             await _context.SaveChangesAsync();
         }
-
-        public async Task<OrderItem?> GetByIdAsync(int id)
-        {
-            return await _context.OrderItems
-                .FirstOrDefaultAsync(o => o.Id == id);
-        }
-
     }
 }

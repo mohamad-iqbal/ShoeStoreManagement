@@ -24,6 +24,8 @@ namespace ShoeStoreManagement.Infrastructure.Data
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<InventoryTransaction> InventoryTransactions { get; set; }
+        public DbSet<Return> Returns { get; set; }
+        public DbSet<ReturnItem> ReturnItems { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -123,6 +125,26 @@ namespace ShoeStoreManagement.Infrastructure.Data
                 .HasForeignKey(i => i.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            // Order - Return ( 1 to many )
+            modelBuilder.Entity<Return>()
+                .HasOne(r => r.Order)
+                .WithMany(o => o.Returns)
+                .HasForeignKey(r => r.OrderId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Return - ReturnItem (1 to many)
+            modelBuilder.Entity<ReturnItem>()
+                .HasOne(i => i.Return)
+                .WithMany(r => r.ReturnItems)
+                .HasForeignKey(i => i.ReturnId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // OrderItem - ReturnItem ( 1 to many )
+            modelBuilder.Entity<ReturnItem>()
+                .HasOne(r => r.OrderItem)
+                .WithMany(o => o.ReturnItems)
+                .HasForeignKey(r => r.OrderItemId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
 
     }

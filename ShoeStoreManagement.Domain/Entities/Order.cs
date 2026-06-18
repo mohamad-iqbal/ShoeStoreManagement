@@ -22,6 +22,6 @@ namespace ShoeStoreManagement.Domain.Entities
         public Customer Customer { get; set; } = null!;
         public ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
         public ICollection<InventoryTransaction> InventoryTransactions { get; set; } = new List<InventoryTransaction>();
-
+        public ICollection<Return> Returns { get; set; } = new List<Return>();
     }
 }

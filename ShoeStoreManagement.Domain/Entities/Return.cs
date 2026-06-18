@@ -6,17 +6,17 @@ using System.Threading.Tasks;
 
 namespace ShoeStoreManagement.Domain.Entities
 {
-    public class OrderItem
+    public class Return
     {
         public int Id { get; set; }
         public int OrderId { get; set; }
-        public int ProductVariantId { get; set; }
-        public int Quantity { get; set; }
-        public decimal Price { get; set; }
+        public DateTime ReturnDate { get; set; }
+        public decimal TotalRefund { get; set; }
 
         // Navigation
         public Order Order { get; set; } = null!;
-        public ProductVariant ProductVariant { get; set; } = null!;
-        public ICollection<ReturnItem> ReturnItems { get; set; } = new List<ReturnItem>();
+        public ICollection<ReturnItem> ReturnItems { get; set; }
+            = new List<ReturnItem>();
+
     }
 }
