@@ -10,5 +10,7 @@ namespace ShoeStoreManagement.Application.Interfaces
     public interface IReturnService
     {
         Task<ReturnResponseDto> CreateReturnAsync(CreateReturnDto dto);
+        Task<ReturnResponseDto?> GetByIdAsync(int id);
+        Task<IEnumerable<ReturnResponseDto>> GetAllAsync();
     }
 }

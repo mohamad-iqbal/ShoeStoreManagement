@@ -195,5 +195,79 @@ namespace ShoeStoreManagement.Application.Services
                     }).ToList()
             };
         }
-    }
+
+        public async Task<ReturnResponseDto?> GetByIdAsync(int id)
+        {
+            var returned = await _returnRepository.GetByIdAsync(id);
+            
+            if (returned == null)
+            {
+                return null;
+            }
+
+            var storeId = _currentUserService.StoreId;
+
+            var order = await _orderRepository.GetByIdAsync(returned.OrderId);
+
+            if (order == null || order.StoreId != storeId)
+            {
+                throw new ForbiddenException("You cannot access this return");
+            }
+
+            return new ReturnResponseDto
+            {
+                Id = returned.Id,
+                OrderId = returned.OrderId,
+                ReturnDate = returned.ReturnDate,
+                TotalRefund = returned.TotalRefund,
+
+                ReturnItems = returned.ReturnItems.Select(item => new ReturnItemResponseDto
+                {
+                    Id = item.Id,
+                    ReturnId = item.ReturnId,
+                    OrderItemId = item.OrderItemId,
+                    Quantity = item.Quantity,
+                    RefundAmount = item.RefundAmount
+                }).ToList()
+            };
+        }
+
+        public async Task<IEnumerable<ReturnResponseDto>> GetAllAsync()
+        {
+            var storeId = _currentUserService.StoreId;
+
+            var returns = await _returnRepository.GetAllAsync();
+
+            var result = new List<ReturnResponseDto>();
+
+            foreach (var returned in returns)
+            {
+                var order = await _orderRepository.GetByIdAsync(returned.OrderId);
+
+                if (order == null || order.StoreId != storeId)
+                {
+                    continue;
+                }
+
+                result.Add(new ReturnResponseDto
+                {
+                    Id = returned.Id,
+                    OrderId = returned.OrderId,
+                    ReturnDate = returned.ReturnDate,
+                    TotalRefund = returned.TotalRefund,
+
+                    ReturnItems = returned.ReturnItems.Select(item => new ReturnItemResponseDto
+                    {
+                        Id = item.Id,
+                        ReturnId = item.ReturnId,
+                        OrderItemId = item.OrderItemId,
+                        Quantity = item.Quantity,
+                        RefundAmount = item.RefundAmount
+                    }).ToList(),
+                });
+            }
+
+            return result;
+        }
+}
 }

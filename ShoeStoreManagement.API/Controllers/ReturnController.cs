@@ -24,5 +24,27 @@ namespace ShoeStoreManagement.API.Controllers
             var returned = await _returnService.CreateReturnAsync(dto);
             return Ok(returned);
         }
+
+        [Authorize]
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            var returned = await _returnService.GetByIdAsync(id);
+
+            if (returned == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(returned);
+        }
+
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            var returns = await _returnService.GetAllAsync();
+            return Ok(returns);
+        }
     }
 }

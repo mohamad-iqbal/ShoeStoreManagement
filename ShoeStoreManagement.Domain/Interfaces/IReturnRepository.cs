@@ -10,5 +10,7 @@ namespace ShoeStoreManagement.Domain.Interfaces
     public interface IReturnRepository
     {
         Task AddAsync(Return returnEntity);
+        Task<Return?> GetByIdAsync(int id);
+        Task<IEnumerable<Return>> GetAllAsync();
     }
 }

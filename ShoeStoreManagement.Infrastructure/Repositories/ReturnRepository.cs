@@ -24,5 +24,19 @@ namespace ShoeStoreManagement.Infrastructure.Repositories
             await _context.Returns.AddAsync(returnEntity);
             await _context.SaveChangesAsync();
         }
-    }
+
+        public async Task<Return?> GetByIdAsync(int id)
+        {
+            return await _context.Returns
+                .Include(r => r.ReturnItems)
+                .FirstOrDefaultAsync(r => r.Id == id);
+        }
+
+        public async Task<IEnumerable<Return>> GetAllAsync()
+        {
+            return await _context.Returns
+                .Include(r => r.ReturnItems)
+                .ToListAsync();
+        }
+}
 }
