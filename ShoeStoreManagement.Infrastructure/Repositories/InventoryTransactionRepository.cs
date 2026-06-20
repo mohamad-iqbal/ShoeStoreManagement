@@ -31,5 +31,15 @@ namespace ShoeStoreManagement.Infrastructure.Repositories
                 .Where(o => o.OrderId == orderId)
                 .ToListAsync();
         }
+
+        public async Task<IEnumerable<InventoryTransaction>> GetAllAsync()
+        {
+            return await _context.InventoryTransactions.ToListAsync();
+        }
+
+        public async Task<InventoryTransaction?> GetByIdAsync(int id)
+        {
+            return await _context.InventoryTransactions.FindAsync(id);
+        }
     }
 }

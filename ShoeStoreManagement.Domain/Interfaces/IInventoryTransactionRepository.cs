@@ -11,5 +11,7 @@ namespace ShoeStoreManagement.Domain.Interfaces
     {
         Task AddAsync(InventoryTransaction transaction);
         Task <IEnumerable<InventoryTransaction>> GetByOrderIdAsync(int orderId);
+        Task<IEnumerable<InventoryTransaction>> GetAllAsync();
+        Task <InventoryTransaction?> GetByIdAsync(int id);        
     }
 }

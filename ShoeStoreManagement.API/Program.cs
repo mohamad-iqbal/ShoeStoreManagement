@@ -34,6 +34,7 @@ builder.Services.AddScoped<IInventoryTransactionRepository, InventoryTransaction
 builder.Services.AddScoped<IReturnItemRepository, ReturnItemRepository>();
 builder.Services.AddScoped<IReturnRepository, ReturnRepository>();
 builder.Services.AddScoped<IReturnService, ReturnService>();
+builder.Services.AddScoped<IInventoryTransactionService, InventoryTransactionService>();
 builder.Services.AddHttpContextAccessor();
 
 var jwtSettings = builder.Configuration.GetSection("Jwt");
