@@ -29,6 +29,5 @@ namespace ShoeStoreManagement.Infrastructure.Repositories
             return await _context.OrderItems
                 .FirstOrDefaultAsync(o => o.Id == id);
         }
-
     }
 }

@@ -13,9 +13,7 @@ namespace ShoeStoreManagement.Domain.Interfaces
         Task <IEnumerable<Customer>> GetAllAsync();
         Task <Customer?> GetByIdAsync(int id);
         Task <Customer?> GetByNameAsync(string name);
-        Task<IEnumerable<Customer>> SearchAsync(string keyword);
         Task UpdateAsync(Customer customer) ;
-        Task DeleteAsync(Customer customer);
-        
+        Task DeleteAsync(Customer customer);        
     }
 }

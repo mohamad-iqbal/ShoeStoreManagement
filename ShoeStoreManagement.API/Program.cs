@@ -1,13 +1,14 @@
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using ShoeStoreManagement.Infrastructure.Data;
+using ShoeStoreManagement.API.Middleware;
 using ShoeStoreManagement.Application;
 using ShoeStoreManagement.Application.Interfaces;
 using ShoeStoreManagement.Application.Services;
-using System.Text;
 using ShoeStoreManagement.Domain.Interfaces;
+using ShoeStoreManagement.Infrastructure.Data;
 using ShoeStoreManagement.Infrastructure.Repositories;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -76,6 +77,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseMiddleware<ExceptionMiddleware>();
+
 app.UseAuthentication();
 
 app.UseAuthorization();

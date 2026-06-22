@@ -38,5 +38,5 @@ namespace ShoeStoreManagement.Infrastructure.Repositories
                 .Include(r => r.ReturnItems)
                 .ToListAsync();
         }
-}
+    }
 }
