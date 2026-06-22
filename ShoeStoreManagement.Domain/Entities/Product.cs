@@ -12,7 +12,7 @@ namespace ShoeStoreManagement.Domain.Entities
         public int StoreId { get; set; }
         public string Sku {  get; set; } = string.Empty;
         public string Name { get; set; } = string.Empty;
-        public int Price { get; set; }
+        public decimal Price { get; set; }
 
         // Navigation
         public Store Store { get; set; } = null!;

@@ -10,7 +10,7 @@ namespace ShoeStoreManagement.Application.Dtos
     {
         public string Name { get; set; } = string.Empty;
         public string Sku { get; set; } = string.Empty;
-        public int Price { get; set; }
+        public decimal Price { get; set; }
         public int StoreId { get; set; }
         public List<UpdateProductVariantDto> Variants { get; set; }
             = new();
