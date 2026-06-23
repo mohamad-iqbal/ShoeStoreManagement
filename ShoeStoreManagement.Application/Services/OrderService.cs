@@ -39,6 +39,7 @@ namespace ShoeStoreManagement.Application.Services
         {
             var role = _currentUserService.Role;
             var storeId = _currentUserService.StoreId;
+
             if (role != Role.Sales)
             {
                 throw new ForbiddenException("You cannot create this order");
@@ -162,6 +163,14 @@ namespace ShoeStoreManagement.Application.Services
         public async Task<IEnumerable<OrderResponseDto>> GetAllAsync()
         {
             var orders = await _orderRepository.GetAllAsync();
+                        
+            var storeId = _currentUserService.StoreId;
+
+            if (_currentUserService.Role != Role.Admin)
+            {
+                orders = orders.Where(o => o.StoreId == storeId);
+            }
+
             return orders.Select(order => new OrderResponseDto
             {
                 Id = order.Id,
@@ -195,11 +204,15 @@ namespace ShoeStoreManagement.Application.Services
             }
 
             var storeId = _currentUserService.StoreId;
-            if (order.StoreId != storeId)
-            {
-                throw new ForbiddenException("You cannot access this order");
-            }
 
+            if (_currentUserService.Role != Role.Admin)
+            {
+                if (order.StoreId != storeId)
+                {
+                    throw new ForbiddenException("You cannot access this order");
+                }
+            }
+            
             return new OrderResponseDto
             {
                 Id = order.Id,
@@ -238,10 +251,13 @@ namespace ShoeStoreManagement.Application.Services
             {
                 throw new BadRequestException("Store not found");
             }
-            
-            if (order.StoreId != storeId)
+
+            if (_currentUserService.Role != Role.Admin)
             {
-                throw new ForbiddenException("You cannot access this order");
+                if (order.StoreId != storeId)
+                {
+                    throw new ForbiddenException("You cannot access this order");
+                }
             }
 
             if (order.Status == Status.Canceled)

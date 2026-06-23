@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ShoeStoreManagement.Domain.Enums;
 
 namespace ShoeStoreManagement.Application.Services
 {
@@ -41,11 +42,14 @@ namespace ShoeStoreManagement.Application.Services
                 throw new NotFoundException("Order not found");
             }
 
-            if (order.StoreId != storeId)
+            if (_currentUserService.Role != Role.Admin)
             {
-                throw new ForbiddenException("You cannot access this inventory transaction");
+                if (order.StoreId != storeId)
+                {
+                    throw new ForbiddenException("You cannot access this inventory transaction");
+                }
             }
-
+            
             return new InventoryTransactionResponseDto
             {
                 Id = inventaryTransaction.Id,
@@ -75,9 +79,12 @@ namespace ShoeStoreManagement.Application.Services
                     continue;
                 }
 
-                if (order.StoreId != storeId)
+                if (_currentUserService.Role != Role.Admin)
                 {
-                    continue;
+                    if (order.StoreId != storeId)
+                    {
+                        throw new ForbiddenException("You cannot access this order");
+                    }
                 }
 
                 result.Add(new InventoryTransactionResponseDto

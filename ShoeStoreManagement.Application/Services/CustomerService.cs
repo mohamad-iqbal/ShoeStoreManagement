@@ -31,7 +31,7 @@ namespace ShoeStoreManagement.Application.Services
 
             if (role != Role.Admin && role != Role.Sales)
             {
-                throw new FormatException("You cannot create customer");
+                throw new ForbiddenException("You cannot create customer");
             }
             
             var customer = new Customer
