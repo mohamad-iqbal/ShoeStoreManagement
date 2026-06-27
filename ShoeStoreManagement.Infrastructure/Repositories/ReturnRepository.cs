@@ -22,7 +22,6 @@ namespace ShoeStoreManagement.Infrastructure.Repositories
         public async Task AddAsync(Return returnEntity)
         {
             await _context.Returns.AddAsync(returnEntity);
-            await _context.SaveChangesAsync();
         }
 
         public async Task<Return?> GetByIdAsync(int id)

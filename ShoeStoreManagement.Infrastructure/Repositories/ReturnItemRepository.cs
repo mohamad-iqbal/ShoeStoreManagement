@@ -21,7 +21,6 @@ namespace ShoeStoreManagement.Infrastructure.Repositories
         public async Task AddAsync(ReturnItem item)
         {
             await _context.ReturnItems.AddAsync(item);
-            await _context.SaveChangesAsync();
         }
     }
 }

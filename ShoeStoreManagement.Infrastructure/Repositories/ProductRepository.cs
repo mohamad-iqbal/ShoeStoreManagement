@@ -22,7 +22,6 @@ namespace ShoeStoreManagement.Infrastructure.Repositories
         public async Task AddAsync(Product product)
         {
             await _context.Products.AddAsync(product);
-            await _context.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<Product>> GetAllAsync()
@@ -48,16 +47,16 @@ namespace ShoeStoreManagement.Infrastructure.Repositories
                 .FirstOrDefaultAsync(p => p.Sku == sku && p.StoreId == storeId);
         }
 
-        public async Task UpdateAsync(Product product)
+        public Task UpdateAsync(Product product)
         {
             _context.Products.Update(product);
-            await _context.SaveChangesAsync();
+            return Task.CompletedTask;
         }
 
-        public async Task DeleteAsync(Product product)
+        public Task DeleteAsync(Product product)
         {
             _context.Products.Remove(product);
-            await _context.SaveChangesAsync();
+            return Task.CompletedTask;
         }
     }
 }

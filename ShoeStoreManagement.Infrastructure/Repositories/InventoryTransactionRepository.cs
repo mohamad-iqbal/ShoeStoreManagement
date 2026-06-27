@@ -22,7 +22,6 @@ namespace ShoeStoreManagement.Infrastructure.Repositories
         public async Task AddAsync(InventoryTransaction transaction)
         {
             await _context.InventoryTransactions.AddAsync(transaction);
-            await _context.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<InventoryTransaction>> GetByOrderIdAsync(int orderId)

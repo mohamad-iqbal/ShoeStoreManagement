@@ -21,7 +21,6 @@ namespace ShoeStoreManagement.Infrastructure.Repositories
         public async Task AddAsync(OrderItem orderItem)
         {
             await _context.OrderItems.AddAsync(orderItem);
-            await _context.SaveChangesAsync();
         }
 
         public async Task<OrderItem?> GetByIdAsync(int id)

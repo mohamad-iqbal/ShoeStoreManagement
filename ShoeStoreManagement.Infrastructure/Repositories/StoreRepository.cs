@@ -35,14 +35,12 @@ namespace ShoeStoreManagement.Infrastructure.Repositories
 
         public async Task UpdateAsync(Store store)
         {
-            _context.Stores.Update(store);
-            await _context.SaveChangesAsync();
+            _context.Stores.Update(store);            
         }
 
         public async Task DeleteAsync(Store store)
         {
             _context.Stores.Remove(store);
-            await _context.SaveChangesAsync();
         }
     }
 }

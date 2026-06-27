@@ -24,7 +24,6 @@ namespace ShoeStoreManagement.Infrastructure.Repositories
         public async Task AddAsync(ProductVariant product)
         {
             await _context.ProductVariants.AddAsync(product);
-            await _context.SaveChangesAsync();
         }
         public async Task<IEnumerable<ProductVariant>> GetAllAsync()
         {
@@ -49,16 +48,16 @@ namespace ShoeStoreManagement.Infrastructure.Repositories
                 .FirstOrDefaultAsync(pv => pv.Id == id);
         }
 
-        public async Task UpdateAsync(ProductVariant productVariant)
+        public Task UpdateAsync(ProductVariant productVariant)
         {
             _context.ProductVariants.Update(productVariant);
-            await _context.SaveChangesAsync();
+            return Task.CompletedTask;
 
         }
-        public async Task DeleteAsync(ProductVariant productVariant)
+        public Task DeleteAsync(ProductVariant productVariant)
         {
             _context.ProductVariants.Remove(productVariant);
-            await _context.SaveChangesAsync();
+            return Task.CompletedTask;
         }
 
         public async Task<bool> ExistProductNameAndSizeAsync(string productName, int size, int storeId)
