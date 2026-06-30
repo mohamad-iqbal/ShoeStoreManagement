@@ -39,6 +39,7 @@ namespace ShoeStoreManagement.Infrastructure.Repositories
                 .Include(o => o.Store)
                 .Include(o => o.Customer)
                 .Include(o => o.OrderItems)
+                .ThenInclude(x => x.ProductVariant)
                 .FirstOrDefaultAsync(o => o.Id == id);
         }
 

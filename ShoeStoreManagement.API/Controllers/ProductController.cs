@@ -25,7 +25,7 @@ namespace ShoeStoreManagement.API.Controllers
             return Ok(product);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> GetAllProduct()
         {

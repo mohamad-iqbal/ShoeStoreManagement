@@ -266,8 +266,7 @@ namespace ShoeStoreManagement.Application.Services
                     }).ToList(),
                 });
             }
-            return result;
-        
+            return result;        
         }
     }
 }

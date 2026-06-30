@@ -1,14 +1,15 @@
 ﻿using ShoeStoreManagement.Application.Dtos;
-using ShoeStoreManagement.Application.Interfaces;
 using ShoeStoreManagement.Application.Exceptions;
+using ShoeStoreManagement.Application.Interfaces;
+using ShoeStoreManagement.Domain.Entities;
 using ShoeStoreManagement.Domain.Enums;
 using ShoeStoreManagement.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ShoeStoreManagement.Domain.Entities;
 
 namespace ShoeStoreManagement.Application.Services
 {
@@ -29,12 +30,6 @@ namespace ShoeStoreManagement.Application.Services
 
         public async Task<ProductResponseDto> CreateProductAsync(CreateProductDto dto)
         {
-            var role = _currentUserService.Role;
-            if (role != Role.Admin)
-            {
-                throw new ForbiddenException("Only admin can create product");
-            }
-
             if (dto.Variants == null || !dto.Variants.Any())
             {
                 throw new BadRequestException("Product must have variant");
@@ -85,9 +80,11 @@ namespace ShoeStoreManagement.Application.Services
                 StoreId = product.StoreId,
                 Price = product.Price,
 
-                Variants = dto.Variants
+                Variants = product.ProductVariants
                     .Select(v => new ProductVariantResponseDto
                     {
+                        Id = v.Id,
+                        ProductId = v.ProductId,
                         Size = v.Size,
                         StockQty = v.StockQty
                     }).ToList()
@@ -109,6 +106,8 @@ namespace ShoeStoreManagement.Application.Services
                 Variants = product.ProductVariants
                 .Select(v => new ProductVariantResponseDto
                 {
+                    Id = v.Id,
+                    ProductId = v.ProductId,
                     Size = v.Size,
                     StockQty = v.StockQty
                 }).ToList()
@@ -121,10 +120,15 @@ namespace ShoeStoreManagement.Application.Services
             if(product == null)
                 return null;
 
-            var userId = _currentUserService.Id;
-            if (userId != id)
+            var role = _currentUserService.Role;
+            var storeId = _currentUserService.StoreId;
+            if (role != Role.Admin)
             {
-                throw new ForbiddenException("you cannot access");
+                if (product.StoreId != storeId)
+                {
+                    throw new ForbiddenException(
+                        "You cannot access this product");
+                }
             }
 
             return new ProductResponseDto
@@ -138,6 +142,8 @@ namespace ShoeStoreManagement.Application.Services
                 Variants = product.ProductVariants
                 .Select(v => new ProductVariantResponseDto
                 {
+                    Id = v.Id,
+                    ProductId = v.ProductId,
                     Size = v.Size,
                     StockQty = v.StockQty
                 }).ToList()
@@ -149,12 +155,6 @@ namespace ShoeStoreManagement.Application.Services
             var product = await _productRepository.GetByIdAsync(id);
             if (product == null)
                 return null;
-
-            var role = _currentUserService.Role;
-            if (role != Role.Admin)
-            {
-                throw new ForbiddenException("Only admin can update product");
-            }
 
             product.Name = dto.Name;
             product.Sku = dto.Sku;
@@ -194,12 +194,6 @@ namespace ShoeStoreManagement.Application.Services
             if (product == null)
             {
                 throw new NotFoundException("Product Not Found");
-            }
-
-            var role = _currentUserService.Role;
-            if (role != Role.Admin)
-            {
-                throw new ForbiddenException("Only admin can delete product");
             }
 
             await _productRepository.DeleteAsync(product);

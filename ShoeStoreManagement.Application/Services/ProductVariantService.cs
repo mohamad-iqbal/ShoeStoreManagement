@@ -16,25 +16,17 @@ namespace ShoeStoreManagement.Application.Services
     {
         private readonly IProductVariantRepository _productVariantRepository;
         private readonly IProductRepository _productRepository;
-        private readonly ICurrentUserService _currentUserService;
         private readonly IUnitOfWork _unitOfWork;
 
-        public ProductVariantService(IProductVariantRepository productVariantRepository, IProductRepository productRepository, ICurrentUserService currentUserService, IUnitOfWork unitOfWork)
+        public ProductVariantService(IProductVariantRepository productVariantRepository, IProductRepository productRepository, IUnitOfWork unitOfWork)
         {
             _productVariantRepository = productVariantRepository;
             _productRepository = productRepository;
-            _currentUserService = currentUserService;
             _unitOfWork = unitOfWork;
         }
 
         public async Task<ProductVariantResponseDto> CreateProductVariantAsync(CreateProductVariantDto dto)
         {
-            var role = _currentUserService.Role;
-            if (role != Role.Admin)
-            {
-                throw new ForbiddenException("Only admin can create Variant");
-            }
-
             var product = await _productRepository.
                 GetByIdAsync(dto.ProductId);
             if (product == null)
@@ -69,12 +61,6 @@ namespace ShoeStoreManagement.Application.Services
 
         public async Task<ProductVariantResponseDto?> UpdateProductVariantAsync(int id, UpdateProductVariantDto dto)
         {
-            var role = _currentUserService.Role;
-            if (role != Role.Admin)
-            {
-                throw new ForbiddenException("Only admin can update");
-            }
-
             var productVariant = await _productVariantRepository.GetByIdAsync(id);
             if (productVariant == null)
             {
@@ -106,12 +92,6 @@ namespace ShoeStoreManagement.Application.Services
 
         public async Task DeleteProductVariantAsync(int id)
         {
-            var role = _currentUserService.Role;
-            if (role != Role.Admin)
-            {
-                throw new ForbiddenException("Only admin can update");
-            }
-
             var productVariant = await _productVariantRepository.GetByIdAsync(id);
             if (productVariant == null)
             {

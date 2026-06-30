@@ -142,6 +142,8 @@ namespace ShoeStoreManagement.Application.Services
 
             await _unitOfWork.SaveChangesAsync();
 
+            var cretaeorder = await _orderRepository.GetByIdAsync(order.Id);
+
             return new OrderResponseDto
             {
                 Id = order.Id,
@@ -151,8 +153,10 @@ namespace ShoeStoreManagement.Application.Services
                 TotalAmount = order.TotalAmount,
                 Date = order.Date,
                 Status = order.Status,
-                OrderItems = dto.OrderItems.Select(item => new OrderItemsResponseDto
+                OrderItems = cretaeorder.OrderItems.Select(item => new OrderItemsResponseDto
                 {
+                    Id = item.Id,
+                    OrderId = item.OrderId,
                     ProductVariantId = item.ProductVariantId,
                     Quantity = item.Quantity,
                     Price = item.Price

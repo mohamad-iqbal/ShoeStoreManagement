@@ -29,12 +29,6 @@ namespace ShoeStoreManagement.Application.Services
 
         public async Task<UserResponseDto> CreateUserAsync(CreateUserDto dto)
         {
-            var role = _currentUser.Role;
-            if (role != Role.Admin)
-            {
-                throw new ForbiddenException("Only admin can create user");
-            }
-
             var store = await _storeRepository.GetByIdAsync(dto.StoreId);
             if (store == null)
             {
@@ -100,13 +94,6 @@ namespace ShoeStoreManagement.Application.Services
         public async Task<IEnumerable<UserResponseDto>> GetAllAsync()
         {
             
-            var role = _currentUser.Role;
-
-            if (role != Role.Admin)
-            {
-                throw new ForbiddenException("Only admin can view all users");
-            }
-
             var users = await _userRepository.GetAllAsync();
 
             return users.Select(user => new UserResponseDto
@@ -177,12 +164,6 @@ namespace ShoeStoreManagement.Application.Services
             if (user == null)
             {
                 throw new NotFoundException("User Not Found");
-            }
-
-            var role = _currentUser.Role;
-            if (role != Role.Admin)
-            {
-                throw new ForbiddenException("Only admin can delete user");
             }
 
             await _userRepository.DeleteAsync(user);
