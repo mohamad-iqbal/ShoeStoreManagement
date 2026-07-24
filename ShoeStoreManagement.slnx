@@ -3,4 +3,5 @@
   <Project Path="ShoeStoreManagement.Application/ShoeStoreManagement.Application.csproj" />
   <Project Path="ShoeStoreManagement.Domain/ShoeStoreManagement.Domain.csproj" />
   <Project Path="ShoeStoreManagement.Infrastructure/ShoeStoreManagement.Infrastructure.csproj" />
+  <Project Path="ShoeStoreManagement.Tests/ShoeStoreManagement.Tests.csproj" Id="19eb5b00-9df7-42a9-a1ea-fe5b399d06c2" />
 </Solution>
