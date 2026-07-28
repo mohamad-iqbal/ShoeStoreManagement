@@ -26,10 +26,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Services\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\ShoeStoreManagement.Application\ShoeStoreManagement.Application.csproj" />
     <ProjectReference Include="..\ShoeStoreManagement.Domain\ShoeStoreManagement.Domain.csproj" />
     <ProjectReference Include="..\ShoeStoreManagement.Infrastructure\ShoeStoreManagement.Infrastructure.csproj" />
