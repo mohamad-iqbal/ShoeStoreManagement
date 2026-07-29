@@ -35,8 +35,10 @@ namespace ShoeStoreManagement.Tests.Services
                 _unitOfWorkMock.Object);
         }
 
-        [Fact]
-        public async Task CreateCustomerAsync_WhenUserIsAdmin_ShouldCreateCustomer()
+        [Theory]
+        [InlineData(Role.Admin)]
+        [InlineData(Role.Sales)]
+        public async Task CreateCustomerAsync_WhenUserIsValidRole_ShouldCreateCustomer(Role role)
         {
             // Arrange
             var dto = new CreateCustomerDto
@@ -49,7 +51,7 @@ namespace ShoeStoreManagement.Tests.Services
 
             _currentUserServiceMock
                 .Setup(x => x.Role)
-                .Returns(Role.Admin);
+                .Returns(role);
 
             // Act
             var result = await _customerService.CreateCustomerAsync(dto);
