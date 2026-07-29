@@ -1,16 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FluentAssertions;
+﻿using FluentAssertions;
 using Moq;
 using ShoeStoreManagement.Application.Dtos;
+using ShoeStoreManagement.Application.Exceptions;
 using ShoeStoreManagement.Application.Interfaces;
 using ShoeStoreManagement.Application.Services;
 using ShoeStoreManagement.Domain.Entities;
 using ShoeStoreManagement.Domain.Enums;
 using ShoeStoreManagement.Domain.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace ShoeStoreManagement.Tests.Services
@@ -71,6 +72,38 @@ namespace ShoeStoreManagement.Tests.Services
             _unitOfWorkMock.Verify(
                 x => x.SaveChangesAsync(),
                 Times.Once());
+        }
+
+        [Fact]
+        public async Task CreateCustomerAsync_WhenUserRoleIsInvalid_ShouldThrowForbiddenException()
+        {
+            // Arrange
+            var dto = new CreateCustomerDto
+            {
+                Name = "Jhon Doe",
+                Address = "Jakarta",
+                Phone = "081234567890",
+                Source = Source.Shopee
+            };
+
+            _currentUserServiceMock
+                .Setup(x => x.Role)
+                .Returns((Role)99);
+
+            // Act
+            Func<Task> act = async () => await _customerService.CreateCustomerAsync(dto);
+
+            // Assert
+            await act.Should()
+                .ThrowAsync<ForbiddenException>();
+
+            _customerRepositoryMock.Verify(
+                x => x.AddAsync(It.IsAny<Customer>()),
+                Times.Never());
+
+            _unitOfWorkMock.Verify(
+                x => x.SaveChangesAsync(),
+                Times.Never());
         }
     }
 }
