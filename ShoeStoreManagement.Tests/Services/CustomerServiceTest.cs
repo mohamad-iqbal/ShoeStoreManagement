@@ -107,5 +107,45 @@ namespace ShoeStoreManagement.Tests.Services
                 x => x.SaveChangesAsync(),
                 Times.Never());
         }
+
+        [Theory]
+        [InlineData(Role.Admin)]
+        [InlineData(Role.Sales)]
+        public async Task GetByIdAsync_WhenCustomerExistAndRoleIsValid_ShouldReturnCustomer(Role role)
+        {
+            // Arrange
+            var customer = new Customer
+            {
+                Id = 1,
+                Name = "John",
+                Address = "Bali",
+                Phone = "089878787878",
+                Source = Source.Shopee
+            };
+
+            _customerRepositoryMock
+                .Setup(x => x.GetByIdAsync(customer.Id))
+                .ReturnsAsync(customer);
+
+            // Act
+            var result = await _customerService.GetByIdAsync(customer.Id);
+
+            // Assert
+            var excepted = new CustomerResponseDto
+            {
+                Id = customer.Id,
+                Name = customer.Name,
+                Address = customer.Address,
+                Phone = customer.Phone,
+                Source = customer.Source
+            };
+
+            result.Should().NotBeNull();
+            result.Should().BeEquivalentTo(customer);
+
+            _customerRepositoryMock.Verify(
+                x => x.GetByIdAsync(customer.Id),
+                Times.Once());
+        }
     }
 }
